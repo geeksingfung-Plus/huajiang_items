@@ -31,7 +31,7 @@ body::before {
   content: "";
   position: fixed;
   inset: -45vmax;
-  z-index: 6;
+  z-index: 1000;
   pointer-events: none;
   background-image: url("assets/watermark-logo.svg");
   background-repeat: repeat;
@@ -392,18 +392,24 @@ ul {
   justify-content: center;
   padding: 28px;
   background: rgba(6, 20, 23, 0.86);
+  -webkit-touch-callout: none;
+  user-select: none;
 }
 
 .lightbox.is-open {
   display: flex;
 }
 
-.lightbox img {
-  max-width: 96vw;
-  max-height: 92vh;
-  width: auto;
-  height: auto;
+.lightbox-image {
+  width: min(96vw, 1280px);
+  height: 92vh;
+  max-height: 920px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
   box-shadow: 0 28px 80px rgba(0, 0, 0, 0.34);
+  -webkit-touch-callout: none;
+  user-select: none;
 }
 
 .lightbox button {

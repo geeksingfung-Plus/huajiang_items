@@ -246,7 +246,7 @@ function renderProducts() {
 renderProducts();
 
 document.addEventListener("contextmenu", (event) => {
-  if (event.target.closest("img")) {
+  if (event.target.closest("img, .lightbox-image")) {
     event.preventDefault();
   }
 });
@@ -261,24 +261,25 @@ const lightbox = document.createElement("div");
 lightbox.className = "lightbox";
 lightbox.innerHTML = `
   <button type="button" aria-label="关闭大图">×</button>
-  <img alt="" />
+  <div class="lightbox-image" role="img" aria-label=""></div>
 `;
 document.body.appendChild(lightbox);
 
-const lightboxImage = lightbox.querySelector("img");
+const lightboxImage = lightbox.querySelector(".lightbox-image");
 const lightboxClose = lightbox.querySelector("button");
 
 document.querySelectorAll(".visual-frame img").forEach((image) => {
   image.addEventListener("click", () => {
-    lightboxImage.src = image.src;
-    lightboxImage.alt = image.alt;
+    lightboxImage.style.backgroundImage = `url("${image.src}")`;
+    lightboxImage.setAttribute("aria-label", image.alt);
     lightbox.classList.add("is-open");
   });
 });
 
 function closeLightbox() {
   lightbox.classList.remove("is-open");
-  lightboxImage.removeAttribute("src");
+  lightboxImage.style.removeProperty("background-image");
+  lightboxImage.setAttribute("aria-label", "");
 }
 
 lightboxClose.addEventListener("click", closeLightbox);
