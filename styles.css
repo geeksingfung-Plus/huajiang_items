@@ -27,8 +27,25 @@ body {
   font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif;
 }
 
+body::before {
+  content: "";
+  position: fixed;
+  inset: -45vmax;
+  z-index: 6;
+  pointer-events: none;
+  background-image: url("assets/watermark-logo.svg");
+  background-repeat: repeat;
+  background-size: 213px auto;
+  opacity: 0.24;
+  transform: rotate(-34deg);
+  transform-origin: center;
+}
+
 img {
   display: block;
+  -webkit-touch-callout: none;
+  -webkit-user-drag: none;
+  user-select: none;
 }
 
 .deck {
