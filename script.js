@@ -210,7 +210,7 @@ function renderProducts() {
     .map(
       (product, index) => `
         <a class="overview-card" href="#product-${index + 1}">
-          <img src="${product.image}" alt="${product.name}" />
+          <div class="overview-thumb" role="img" aria-label="${product.name}" style="background-image: url('${product.image}')"></div>
           <span>${index + 1}. ${product.name}</span>
         </a>
       `,
@@ -223,7 +223,7 @@ function renderProducts() {
         <section class="slide product-slide" id="product-${index + 1}">
           <div class="slide-content product-layout">
             <div class="visual-frame">
-              <img src="${product.image}" alt="${product.name}产品效果图" />
+              <div class="visual-image" role="img" aria-label="${product.name}" data-full-image="${product.image}" style="background-image: url('${product.image}')"></div>
             </div>
             <div class="product-copy">
               <span class="product-number">${String(index + 1).padStart(2, "0")} / 18</span>
@@ -246,13 +246,13 @@ function renderProducts() {
 renderProducts();
 
 document.addEventListener("contextmenu", (event) => {
-  if (event.target.closest("img, .lightbox-image")) {
+  if (event.target.closest("img, .cover-image, .overview-thumb, .visual-image, .lightbox-image")) {
     event.preventDefault();
   }
 });
 
 document.addEventListener("dragstart", (event) => {
-  if (event.target.closest("img")) {
+  if (event.target.closest("img, .cover-image, .overview-thumb, .visual-image, .lightbox-image")) {
     event.preventDefault();
   }
 });
@@ -268,10 +268,10 @@ document.body.appendChild(lightbox);
 const lightboxImage = lightbox.querySelector(".lightbox-image");
 const lightboxClose = lightbox.querySelector("button");
 
-document.querySelectorAll(".visual-frame img").forEach((image) => {
+document.querySelectorAll(".visual-image").forEach((image) => {
   image.addEventListener("click", () => {
-    lightboxImage.style.backgroundImage = `url("${image.src}")`;
-    lightboxImage.setAttribute("aria-label", image.alt);
+    lightboxImage.style.backgroundImage = `url("${image.dataset.fullImage}")`;
+    lightboxImage.setAttribute("aria-label", image.getAttribute("aria-label"));
     lightbox.classList.add("is-open");
   });
 });
